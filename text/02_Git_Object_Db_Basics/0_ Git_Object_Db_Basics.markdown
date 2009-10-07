@@ -1,55 +1,39 @@
-## The Git Object Model ##
+## Объектная модель Git ##
 
-### The SHA ###
+### Алгоритм SHA ###
 
-All the information needed to represent the history of a
-project is stored in files referenced by a 40-digit "object name" that 
-looks something like this:
+Вся информация, необходимая для представления истории проекта, находится в файлах с 40-символьным именем, которое выглядит примерно так:
     
     6ff87c4664981e4397625791c8ea3bbb5f2279a3
     
-You will see these 40-character strings all over the place in Git.
-In each case the name is calculated by taking the SHA1 hash of the
-contents of the object.  The SHA1 hash is a cryptographic hash function.
-What that means to us is that it is virtually impossible to find two different
-objects with the same name.  This has a number of advantages; among
-others:
+В Git вы постоянно будете встречаться с этими 40-символьными строками.
+В каждом случае это имя является хешем содержимого объекта и генерируется с помощью криптографической хеш-функции по алгоритму SHA1.
+Для нас это значит, что практически невозможно найти два различных объекта с одним и тем же именем. Отсюда ряд преимуществ, среди которых:
+- Git может быстро определить, являются ли два объекта идентичными или нет, просто сравнив их имена.
+- Так как имена объектов вычисляются одним и тем же способом в каждом репозитории, то объекты с одинаковым содержимым в двух репозиториях будут сохранены под одним и тем же именем.
+- Git может выявлять ошибки чтения объекта, сравнив его имя и вычислив хеш содержимого по алгоритму SHA1.
 
-- Git can quickly determine whether two objects are identical or not,
-  just by comparing names.
-- Since object names are computed the same way in every repository, the
-  same content stored in two repositories will always be stored under
-  the same name.
-- Git can detect errors when it reads an object, by checking that the
-  object's name is still the SHA1 hash of its contents.
+### Объекты ###
 
-### The Objects ###
+Каждый объект содержит три атрибута: **тип**, **размер** и **содержимое**.
+_Размер_ - это просто размер содержимого, которое зависит от типа объекта.
+Существуют четыре различных типа объекта: "blob", "tree", "commit" и "tag".
 
-Every object consists of three things - a **type**, a **size** and **content**.
-The _size_ is simply the size of the contents, the contents depend on what
-type of object it is, and there are four different types of objects: 
-"blob", "tree", "commit", and "tag".
+- **"blob"** (сырые двоичные данные) используется для хранения содержимого файла, собственно говоря, это и есть сам файл.
+- **"tree"** (дерево) в основном похоже на директорию (папку в файловой системе) - это ссылки на множество других объектов типа tree и/или blob (т.е. файлов и/или поддиректорий).
+- **"commit"** (коммит, фиксация изменений) указывает на объект типа tree, который показывает, как выглядел проект в определенный момент времени.
+    Он содержит метаинформацию об этом моменте времени, например, о времени создания/модификции этого объекта, авторе изменений, ссылку на предыдущую фиксацию, и т.д.
+- **"tag"** (тег, метка) - это способ указать определенную фиксацию (commit) как особый в некотором смысле.
 
-- A **"blob"** is used to store file data - it is generally a file.
-- A **"tree"** is basically like a directory - it references a bunch of
-    other trees and/or blobs (i.e. files and sub-directories)
-- A **"commit"** points to a single tree, marking it as what the project
-    looked like at a certain point in time.  It contains meta-information
-    about that point in time, such as a timestamp, the author of the changes
-    since the last commit, a pointer to the previous commit(s), etc.
-- A **"tag"** is a way to mark a specific commit as special in some way.  It
-    is normally used to tag certain commits as specific releases or something
-    along those lines.
+Обычно он используется для отметки некоторых объектов типа commit как особых релизов или что-то в этом роде.
+Почти все в Git построено на управлении этой простой структурой из четырех различных типов объектов.
+Это похоже на небольшую файловую систему, находящуюся поверх файловой системы компьютера.
 
-Almost all of Git is built around manipulating this simple structure of four
-different object types.  It is sort of its own little filesystem that sits
-on top of your machine's filesystem.
+### Отличия от SVN ###
 
-### Different from SVN ###
+Важно заметить, что Git сильно отличается от большинства систем контроля версий, с которыми вы можете быть знакомы.
+Subversion, CVS, Perforce, Mercurial и прочие используют систему _хранения изменений_ - они хранят различия между двумя последовательными фиксациями.
+Git поступает по-другому - он сохраняет снимок (snapshot) всех файлов вашего проекта каждый раз, как вы фиксируете изменения.
+При использовании Git это очень важная для понимания концепция.
 
-It is important to note that this is very different from most SCM systems
-that you may be familiar with.  Subversion, CVS, Perforce, Mercurial and the
-like all use _Delta Storage_ systems - they store the differences between one
-commit and the next.  Git does not do this - it stores a snapshot of what all
-the files in your project look like in this tree structure each time you
-commit. This is a very important concept to understand when using Git.
+
