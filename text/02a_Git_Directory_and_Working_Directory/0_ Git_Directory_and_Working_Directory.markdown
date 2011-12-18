@@ -15,7 +15,7 @@ contents of that directory, you can see all of your important files:
     .
     |-- HEAD         # pointer to your current branch
     |-- config       # your configuration preferences
-    |-- description  # description of your project 
+    |-- description  # description of your project
     |-- hooks/       # pre/post action hooks
     |-- index        # index file (see next section)
     |-- logs/        # a history of where your branches have been
@@ -26,9 +26,9 @@ contents of that directory, you can see all of your important files:
 
 ### The Working Directory ###
 
-The Git 'working directory' is the directory that holds the current checkout 
+The Git 'working directory' is the directory that holds the current checkout
 of the files you are working on.  Files in this directory are often removed
-or replaced by Git as you switch branches - this is normal.  All your history 
-is stored in the Git Directory; the working directory is simply a temporary 
+or replaced by Git as you switch branches - this is normal.  All your history
+is stored in the Git Directory; the working directory is simply a temporary
 checkout place where you can modify the files until your next commit.
 

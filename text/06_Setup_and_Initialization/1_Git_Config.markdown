@@ -13,7 +13,7 @@ look like this:
     [user]
             name = Scott Chacon
             email = schacon@gmail.com
-            
+
 If you want to override those values for a specific project (to use a work
 email address, for example), you can run the *git config* command without the
 *--global* option while in that project. This will add a [user] section like

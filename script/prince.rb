@@ -38,7 +38,7 @@ class Prince
   def pdf_from_string(string)
     puts `pwd`
     path = self.exe_path()
-    # Don't spew errors to the standard out...and set up to take IO 
+    # Don't spew errors to the standard out...and set up to take IO
     # as input and output
     path << ' - -o -'
 

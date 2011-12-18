@@ -4,7 +4,7 @@ A blob generally stores the contents of a file.
 
 [fig:object-blob]
 
-You can use linkgit:git-show[1] to examine the contents of any blob. 
+You can use linkgit:git-show[1] to examine the contents of any blob.
 Assuming we have the SHA for a blob, we can examine its contents like this:
 
     $ git show 6ff87c4664

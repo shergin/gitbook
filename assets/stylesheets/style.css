@@ -1,14 +1,14 @@
 /* COLOR SCHEME
- base:   #FFE9B7 
+ base:   #FFE9B7
  darker: #E3D185
  green:  #9AB54F
  red:    #6E212E
  lred:   #B5463F
 */
 
-body { 
+body {
     background:#fff;
-    color: #333; 
+    color: #333;
 }
 a { color: #6E212E; }
 .center { text-align: center; }
@@ -26,8 +26,8 @@ a { color: #6E212E; }
 .chapter .header .nav { float: right }
 .chapter .header .nav a { color: #fff; }
 
-ul.a-index li#m-index a, ul.a-about li#m-about a, 
-ul.a-documentation li#m-documentation a, ul.a-download li#m-download a, 
+ul.a-index li#m-index a, ul.a-about li#m-about a,
+ul.a-documentation li#m-documentation a, ul.a-download li#m-download a,
 ul.a-tools li#m-tools a { font-weight: bold; color: #fff; text-decoration: none;}
 
 ul#about-list li { padding: 5px; }

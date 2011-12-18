@@ -1,7 +1,7 @@
 ### Commit Object ###
 
 The "commit" object links a physical state of a tree with a description
-of how we got there and why. 
+of how we got there and why.
 
 [fig:object-commit]
 
@@ -53,7 +53,7 @@ taken from the content currently stored in the index.
 
 ### The Object Model ###
 
-So, now that we've looked at the 3 main object types (blob, tree and commit), 
+So, now that we've looked at the 3 main object types (blob, tree and commit),
 let's take a quick look at how they all fit together.
 
 If we had a simple project with the following directory structure:

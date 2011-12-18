@@ -1,6 +1,6 @@
 ## Transfer Protocols ##
 
-Here we will go over how clients and servers talk to each other to 
+Here we will go over how clients and servers talk to each other to
 transfer Git data around.
 
 ### Fetching Data over HTTP ###
@@ -10,7 +10,7 @@ In this case, all of the logic is entirely on the client side.  The server
 requires no special setup - any static webserver will work fine if the
 git directory you are fetching from is in the webserver path.
 
-In order for this to work, you do need to run a single command on the 
+In order for this to work, you do need to run a single command on the
 server repo everytime anything is updated, though - linkgit:git-update-server-info[0],
 which updates the objects/info/packs and info/refs files to list which refs
 and packfiles are available, since you can't do a listing over http.  When
@@ -26,15 +26,15 @@ info/refs file will look something like this:
 	32aae7aef7a412d62192f710f2130302997ec883	refs/heads/master
 
 Then when you fetch from this repo, it will start with these refs and walk the
-commit objects until the client has all the objects that it needs. 
+commit objects until the client has all the objects that it needs.
 
 For instance, if you ask to fetch the master branch, it will see that master is
 pointing to <code>32aae7ae</code> and that your master is pointing to <code>ab04d88</code>,
-so you need <code>32aae7ae</code>.  You fetch that object 
+so you need <code>32aae7ae</code>.  You fetch that object
 
 	CONNECT http://myserver.com
 	GET /git/myproject.git/objects/32/aae7aef7a412d62192f710f2130302997ec883 - 200
-	
+
 and it looks like this:
 
 	tree aa176fb83a47d00386be237b450fb9dfb5be251a
@@ -60,10 +60,10 @@ So then it fetches those objects:
 	GET /git/myproject.git/objects/97/b51a6d3685b093cfb345c9e79516e5099a13fb - 200
 	GET /git/myproject.git/objects/9d/1b23b8660817e4a74006f15fae86e2a508c573 - 200
 
-It actually does this with Curl, and can open up multiple parallel threads to 
-speed up this process.  When it's done recursing the tree pointed to by the 
+It actually does this with Curl, and can open up multiple parallel threads to
+speed up this process.  When it's done recursing the tree pointed to by the
 commit, it fetches the next parent.
-	
+
 	GET /git/myproject.git/objects/bd/71cad2d597d0f1827d4a3f67bb96a646f02889 - 200
 
 Now in this case, the commit that comes back looks like this:
@@ -74,7 +74,7 @@ Now in this case, the commit that comes back looks like this:
 	committer Scott Chacon <schacon@gmail.com> 1220421161 -0700
 
 	added chapters on the packfile and how git stores objects
-	
+
 and we can see that the parent, <code>ab04d88</code> is where our master branch
 is currently pointing.  So, we recursively fetch this tree and then stop, since
 we know we have everything before this point.  You can force Git to double check
@@ -82,11 +82,11 @@ that we have everything with the '--recover' option.  See linkgit:git-http-fetch
 for more information.
 
 If one of the loose object fetches fails, Git will download the packfile indexes
-looking for the sha that it needs, then download that packfile. 
+looking for the sha that it needs, then download that packfile.
 
 It is important if you are running a git server that serves repos this way to
 implement a post-receive hook that runs the 'git update-server-info' command
-each time or there will be confusion.	
+each time or there will be confusion.
 
 ### Fetching Data with Upload Pack ###
 
@@ -99,7 +99,7 @@ Then the server will tell the client which SHAs it has for each ref,
 and the client figures out what it needs and responds with a list of SHAs it
 wants and already has.
 
-At this point, the server will generate a packfile with all the objects that 
+At this point, the server will generate a packfile with all the objects that
 the client needs and begin streaming it down to the client.
 
 Let's look at an example.
@@ -143,7 +143,7 @@ request:
 	0032want 74730d410fcb6603ace96f1dc55ea6196122532d
 	00000009done
 
-The is sent to the open git-upload-pack process which then streams out the 
+The is sent to the open git-upload-pack process which then streams out the
 final response:
 
 	"0008NAK\n"
@@ -164,10 +164,10 @@ final response:
 	"0037\\002Total 2797 (delta 1799), reused 2360 (delta 1529)\n"
 	...
 	"<\\276\\255L\\273s\\005\\001w0006\\001[0000"
-	
+
 See the Packfile chapter previously for the actual format of the packfile data
 in the response.
-	
+
 ### Pushing Data ###
 
 Pushing data over the git and ssh protocols is similar, but simpler.  Basically
@@ -180,8 +180,8 @@ on disk and builds an index for it, or unpacks it (if there aren't many objects
 in it)
 
 This entire process is accomplished through the linkgit:git-send-pack[1] command
-on the client, which is invoked by linkgit:git-push[1] and the 
-linkgit:git-receive-pack[1] command on the server side, which is invoked by 
+on the client, which is invoked by linkgit:git-push[1] and the
+linkgit:git-receive-pack[1] command on the server side, which is invoked by
 the ssh connect process or git daemon (if it's an open push server).
 
 
