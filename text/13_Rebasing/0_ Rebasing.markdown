@@ -14,9 +14,9 @@ Now you do some work, creating two new commits.
     $ vi otherfile.txt
     $ git commit
     ...
-    
+
 Meanwhile, someone else does some work creating two new commits on the origin
-branch too. This means both 'origin' and 'mywork' has advanced, which means 
+branch too. This means both 'origin' and 'mywork' has advanced, which means
 the work has diverged.
 
 [fig:rebase1]
@@ -36,11 +36,11 @@ linkgit:git-rebase[1]:
 This will remove each of your commits from mywork, temporarily saving
 them as patches (in a directory named ".git/rebase"), update mywork to
 point at the latest version of origin, then apply each of the saved
-patches to the new mywork.  
+patches to the new mywork.
 
 [fig:rebase3]
 
-Once the ref ('mywork') is updated to point to the newly created commit 
+Once the ref ('mywork') is updated to point to the newly created commit
 objects, your older commits will be abandoned.  They will likely be
 removed if you run a pruning garbage collection. (see linkgit:git-gc[1])
 

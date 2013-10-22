@@ -7,9 +7,9 @@ linkgit:git-config[1]
 	$ git config --global core.editor emacs
 
 ### Adding Aliases ###
-	
+
 	$ git config --global alias.last 'cat-file commit HEAD'
-	
+
 	$ git last
 	tree c85fbd1996b8e7e5eda1288b56042c0cdb91836b
 	parent cdc9a0a28173b6ba4aca00eb34f5aabb39980735
@@ -17,7 +17,7 @@ linkgit:git-config[1]
 	committer Scott Chacon <schacon@gmail.com> 1220473867 -0700
 
 	fixed a weird formatting problem
-	
+
 	$ git cat-file commit HEAD
 	tree c85fbd1996b8e7e5eda1288b56042c0cdb91836b
 	parent cdc9a0a28173b6ba4aca00eb34f5aabb39980735
@@ -38,11 +38,11 @@ See all color.* options in the linkgit:git-config[1] docs
 Or, you can set all of them on with the color.ui option:
 
 	$ git config color.ui true
-	
+
 ### Commit Template ###
 
 	$ git config commit.template '/etc/git-commit-template'
-	
+
 ### Log Format ###
 
 	$ git config format.pretty oneline

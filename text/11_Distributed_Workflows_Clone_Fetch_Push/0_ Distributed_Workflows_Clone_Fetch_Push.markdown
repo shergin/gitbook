@@ -149,7 +149,7 @@ like this:
     	|                                     |
             |               they push             V
       their public repo <------------------- their repo
-      
+
 
 
 ### Pushing changes to a public repository ###

@@ -1,7 +1,7 @@
 ## Raw Git ##
 
 Here we will take a look at how to manipulate git at a more raw level, in
-case you would like to write a tool that generates new blobs, trees or commits 
+case you would like to write a tool that generates new blobs, trees or commits
 in a more artificial way.  If you want to write a script that uses more low-level
 git plumbing to do something new, here are some of the tools you'll need.
 
@@ -22,7 +22,7 @@ The STDOUT output of the command will the the SHA of the blob that was created.
 
 ### Creating Trees ###
 
-Now lets say you want to create a tree from your new objects. 
+Now lets say you want to create a tree from your new objects.
 The linkgit:git-mktree[1] command makes it pretty simple to generate new
 tree objects from linkgit:git-ls-tree[1] formatted output.  For example, if
 you write the following to a file named '/tmp/tree.txt' :
@@ -37,8 +37,8 @@ tree.
 	$ cat /tmp/tree.txt | git mk-tree
 	f66a66ab6a7bfe86d52a66516ace212efa00fe1f
 
-Then, we can take that and make it a subdirectory of yet another tree, and so 
-on.  If we wanted to create a new tree with that one as a subtree, we just 
+Then, we can take that and make it a subdirectory of yet another tree, and so
+on.  If we wanted to create a new tree with that one as a subtree, we just
 create a new file (/tmp/newtree.txt) with our new SHA as a tree in it:
 
 	100644 blob 6ff87c4664981e4397625791c8ea3bbb5f2279a3	file1-copy
@@ -58,7 +58,7 @@ And we now have an artificial directory structure in Git that looks like this:
 	    `-- file2
 
 	1 directory, 3 files
-	
+
 without that structure ever having actually existed on disk.  Plus, we have
 a SHA (<code>5bac6559</code>) that points to it.
 
@@ -71,19 +71,19 @@ using a temporary index file. (You can do this by resetting the GIT_INDEX_FILE
 environment variable or on the command line)
 
 First, we read the tree into our index file under a new prefix using the
-linkgit:git-read-tree[1] command, and then write the index contents as 
+linkgit:git-read-tree[1] command, and then write the index contents as
 a tree using the linkgit:git-write-tree[1] command:
 
 	$ export GIT_INDEX_FILE=/tmp/index
 	$ git read-tree --prefix=copy1/  5bac6559
 	$ git read-tree --prefix=copy2/  5bac6559
-	$ git write-tree 
+	$ git write-tree
 	bb2fa6de7625322322382215d9ea78cfe76508c1
-	
+
 	$>git ls-tree bb2fa
 	040000 tree 5bac6559179bd543a024d6d187692343e2d8ae83	copy1
 	040000 tree 5bac6559179bd543a024d6d187692343e2d8ae83	copy2
-	
+
 So now we can see that we've created a new tree just from index manipulation.
 You can also do interesting merge operations and such in a temporary index
 this way - see the linkgit:git-read-tree[1] docs for more information.
@@ -103,12 +103,12 @@ to set the following:
 	GIT_COMMITTER_DATE
 
 Then you will need to write your commit message to a file or somehow pipe it
-into the command through STDIN. Then, you can create your commit object 
+into the command through STDIN. Then, you can create your commit object
 based on the tree sha we have.
 
 	$ git commit-tree bb2fa < /tmp/message
 	a5f85ba5875917319471dfd98dfc636c1dc65650
-	
+
 If you want to specify one or more parent commits, simply add the shas on the
 command line with a '-p' option before each.  The SHA of the new commit object
 will be returned via STDOUT.

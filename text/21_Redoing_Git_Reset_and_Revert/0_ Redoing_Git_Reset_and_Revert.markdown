@@ -68,7 +68,7 @@ conflicts manually, just as in the case of resolving a merge.
 #### Fixing a mistake by modifying a commit ####
 
 If you have just committed something but realize you need to fix
-up that commit, recent versions of linkgit:git-commit[1] support an 
+up that commit, recent versions of linkgit:git-commit[1] support an
 **--amend** flag which instructs git to replace the HEAD commit
 with a new one, based on the current contents of the index.  This
 gives you an opportunity to add files that you forgot to add or

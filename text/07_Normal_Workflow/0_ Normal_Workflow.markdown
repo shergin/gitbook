@@ -34,7 +34,7 @@ record a new version of the project.
 Alternatively, instead of running `git add` beforehand, you can use
 
     $ git commit -a
-    
+
 which will automatically notice any modified (but not new) files, add
 them to the index, and commit, all in one step.
 

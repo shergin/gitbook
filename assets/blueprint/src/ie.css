@@ -1,10 +1,10 @@
-/* -------------------------------------------------------------- 
-   
+/* --------------------------------------------------------------
+
    ie.css
-   
+
    Contains every hack for Internet Explorer,
    so that our core files stay sweet and nimble.
-   
+
 -------------------------------------------------------------- */
 
 /* Make sure the layout is centered in IE5 */
@@ -29,7 +29,7 @@ sup { vertical-align: text-top; }
 sub { vertical-align: text-bottom; }
 
 /* Fixes IE7 missing wrapping of code elements. */
-html>body p code { *white-space: normal; } 
+html>body p code { *white-space: normal; }
 
 /* IE 6&7 has problems with setting proper <hr> margins. */
 hr  { margin: -8px auto 11px; }

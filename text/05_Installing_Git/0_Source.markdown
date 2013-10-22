@@ -7,7 +7,7 @@ along the lines of :
     $ make prefix=/usr all ;# as yourself
     $ make prefix=/usr install ;# as root
 
-You will need the [expat](http://expat.sourceforge.net/), 
+You will need the [expat](http://expat.sourceforge.net/),
 [curl](http://curl.linux-mirror.org),
 [zlib](http://www.zlib.net), and [openssl](http://www.openssl.org) libraries
 installed - though with the possible exception of *expat*, these will normally already

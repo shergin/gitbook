@@ -24,7 +24,7 @@ After that, you can go back to what you were working on with
 
 ### Stash Queue ###
 
-You can also use stashing to queue up stashed changes.  
+You can also use stashing to queue up stashed changes.
 If you run 'git stash list' you can see which stashes you have saved:
 
 	$>git stash list

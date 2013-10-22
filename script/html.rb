@@ -20,15 +20,15 @@ def do_replacements(html, type = :html)
   html.gsub! /linkgit:(.*?)\[\d\]/ do |code, waa|
     "<a href=\"http://www.kernel.org/pub/software/scm/git/docs/#{$1}.html\">#{$1.gsub('git-', 'git ')}</a>"
   end
-  
+
   # replace figures
   html.gsub! /\[fig:(.*?)\]/, '<div class="center"><img src="images/figure/\1.png"></div>'
-  
+
   # fix images in pdf
   html.gsub!('src="images', 'src="assets/images')
 
   # replace/remove gitcasts
-  
+
   html = html.gsub /\[gitcast:.*?\]\(.*?\)/ do |code|
     if type == :html
       puts code
@@ -44,19 +44,19 @@ def do_replacements(html, type = :html)
     end
     code
   end
-  
+
   html
 end
 
 desc 'Create the HTML version'
 task :html => :merge do
-  
+
   if File.exists?('output/full_book.markdown')
     output = File.new('output/full_book.markdown').read
     output = RDiscount.new(output).to_html
 
     ## pdf version ##
-    
+
     # code highlighting
     File.open('output/index.html', 'w') do |f|
       body = do_replacements(output, :pdf)
@@ -64,20 +64,20 @@ task :html => :merge do
       html_template = File.new("layout/pdf_template.html").read
       html_template.gsub!("#body", body)
 
-      
+
       f.puts html_template
     end
-    
+
     ## html version ##
-    
+
     html_dir = 'output/book'
     FileUtils.rm_r(html_dir) rescue nil
     Dir.mkdir(html_dir)
-    
+
     # html chapters
     links = []
     chapter_files = []
-    
+
     count = 0
     sections = output.split('<h1>')
     sections.each do |section|
@@ -87,7 +87,7 @@ task :html => :merge do
       count += 1
       title = count.to_s + '. ' + title.strip
       puts title
-      
+
       chlinks = []
       chapters = section.split('<h2>')
       chapters.shift
@@ -123,9 +123,9 @@ task :html => :merge do
         f.puts html_template
       end
     end
-    
+
     toc = Builder::XmlMarkup.new(:indent => 1)
-    toc.table { toc.tr { 
+    toc.table { toc.tr {
       toc.td(:valign => "top") {
         links[0,4].each do |section_title, section_array|
           toc.h3(:class => 'title') { toc << section_title }
@@ -152,16 +152,16 @@ task :html => :merge do
           end
         end
       }
-    }}    
+    }}
     File.open('output/book/index.html', 'w') do |f|
       html_template = File.new("layout/book_index_template.html").read
       html_template.gsub!("#body", toc.to_s)
       f.puts html_template
     end
-    
+
     `cp -Rf assets output/book/`
     `cp output/book.pdf output/book/`
-    
+
   end
 end
 

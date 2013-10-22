@@ -1,6 +1,6 @@
 ## Finding with Git Grep ##
 
-Finding files with words or phrases in Git is really easy with the 
+Finding files with words or phrases in Git is really easy with the
 linkgit:git-grep[1] command.  It is possible to do this with the normal
 unix 'grep' command, but with 'git grep' you can also search through
 previous versions of the project without having to check them out.
@@ -48,7 +48,7 @@ If we're only interested in the filename, we can pass the '--name-only' option:
 	sha1_file.c
 	wrapper.c
 
-We could also see how many line matches we have in each file with the '-c' 
+We could also see how many line matches we have in each file with the '-c'
 option:
 
 	$>git grep -c xmmap
@@ -60,19 +60,19 @@ option:
 	sha1_file.c:5
 	wrapper.c:1
 
-Now, if I wanted to see where that was used in a specific version of git, I 
+Now, if I wanted to see where that was used in a specific version of git, I
 could add the tag reference to the end, like this:
 
 	$ git grep xmmap v1.5.0
 	v1.5.0:config.c:                contents = xmmap(NULL, st.st_size, PROT_READ,
 	v1.5.0:diff.c:          s->data = xmmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd,
 	v1.5.0:git-compat-util.h:static inline void *xmmap(void *start, size_t length,
-	v1.5.0:read-cache.c:                    cache_mmap = xmmap(NULL, cache_mmap_size, 
+	v1.5.0:read-cache.c:                    cache_mmap = xmmap(NULL, cache_mmap_size,
 	v1.5.0:refs.c:  log_mapped = xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, logfd
-	v1.5.0:sha1_file.c:     map = xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 
+	v1.5.0:sha1_file.c:     map = xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd,
 	v1.5.0:sha1_file.c:     idx_map = xmmap(NULL, idx_size, PROT_READ, MAP_PRIVATE, fd
 	v1.5.0:sha1_file.c:                     win->base = xmmap(NULL, win->len,
-	v1.5.0:sha1_file.c:     map = xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 
+	v1.5.0:sha1_file.c:     map = xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd,
 	v1.5.0:sha1_file.c:             buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd
 
 We can see that there are some differences between the current lines and these
@@ -105,7 +105,7 @@ We can also search for lines that have one term and either of two other terms,
 for example, if we wanted to see where we defined constants that had either
 PATH or MAX in the name:
 
-	$ git grep -e '#define' --and \( -e PATH -e MAX \) 
+	$ git grep -e '#define' --and \( -e PATH -e MAX \)
 	abspath.c:#define MAXDEPTH 5
 	builtin-blame.c:#define MORE_THAN_ONE_PATH      (1u<<13)
 	builtin-blame.c:#define MAXSG 16
@@ -113,6 +113,5 @@ PATH or MAX in the name:
 	builtin-fetch-pack.c:#define MAX_IN_VAIN 256
 	builtin-fsck.c:#define MAX_SHA1_ENTRIES (1024)
 	...
-	
 
-	
+
